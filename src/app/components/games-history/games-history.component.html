@@ -1,0 +1,12 @@
+<section>
+    <div *ngIf="team">
+        <h3>{{ team.fullName }} [{{ team.abbreviation }}]</h3>
+        <h6>{{ team.conference }}ern conference</h6>
+        <hr/>
+        <p *ngFor="let game of games">
+          <strong>{{ game.homeTeam }}</strong> {{ game.homeScoredPoints }} - {{ game.visitorScoredPoints }}
+          <strong>{{ game.visitorTeam }}</strong>
+        </p>
+        <button routerLink="/" id="backBtn"><< Back to all team stats</button>
+    </div>    
+</section>

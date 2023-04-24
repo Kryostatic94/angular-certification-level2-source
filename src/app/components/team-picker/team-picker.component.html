@@ -1,0 +1,22 @@
+<section>
+    <form class="form" #teamForm="ngForm" (ngSubmit)="onSubmit(teamForm)">
+        <select id="teamSelect" [ngModel]="''" name="team" required>
+            <option value="" selected disabled>Pick a team</option>
+            <option [ngValue]="team" *ngFor="let team of teams">
+                {{ team.fullName }}
+            </option>
+        </select>
+        <button id="trackBtn" [disabled]="teamForm.invalid" type="submit">Track a team</button>
+    </form>
+  
+
+  
+  <ng-container *ngIf="pickedTeams.length > 0">
+    <div class="container">
+      <app-team-detail *ngFor="let team of pickedTeams" 
+      [team]="team"
+      (deleteTeam)="deleteTeam($event)">
+      </app-team-detail>
+    </div>
+  </ng-container>
+</section>

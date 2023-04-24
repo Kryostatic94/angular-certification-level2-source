@@ -1,0 +1,34 @@
+<div class="container">
+    <h3>{{ team.fullName }} [{{ team.abbreviation }}] <span (click)="removeTeam()" id="{{ 'remove' + team.abbreviation }}">&times;</span></h3>
+    <hr>
+    <h6>{{ team.conference }}ern conference</h6>
+    <img src="https://interstate21.com/nba-logos/{{team.abbreviation}}.png" />
+    <hr>
+    Last Games:
+    <div *ngIf="!loading">
+        <ng-container *ngIf="games.length > 0; else noResults" >
+            <ul>
+                <li [ngStyle]="game.matchResult?.result === 'W' ? {'background-color' : 'green'} : {'background-color' : 'red'}" 
+                    *ngFor="let game of games">
+                    {{ game.matchResult?.result}}
+                </li>
+            </ul>
+            Avg pts scored: {{this.avgPointsScored}}
+            <br>
+            Avg pts conceded: {{this.avgPointsConceded}}
+            <br>
+            <br>
+            <button
+                [routerLink]="'results/' + team.abbreviation"
+                [queryParams]="{ teamId: team.id }"
+                id="{{ 'results' + team.abbreviation }}"
+            >
+        See game results >>
+      </button>
+        </ng-container>
+        <ng-template #noResults> 
+            <br>
+            No matches found
+        </ng-template>
+    </div>
+</div>
