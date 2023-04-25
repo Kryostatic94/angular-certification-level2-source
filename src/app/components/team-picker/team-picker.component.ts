@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, DoCheck, OnDestroy, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
@@ -11,30 +11,33 @@ import { DataService } from 'src/app/services/data.service';
   templateUrl: './team-picker.component.html',
   styleUrls: ['./team-picker.component.css']
 })
-export class TeamPickerComponent implements OnInit,OnDestroy{
+export class TeamPickerComponent implements OnInit,OnDestroy,DoCheck{
   private subscription = new Subject<void>();
-  pickedTeams: Team[] = [];
+  trackedTeams: Team[] = [];
   teams: Team[] = [];
-  constructor(private dataService: DataService){}
+  constructor(public dataService: DataService){}
+  
 
 
   ngOnInit(): void {
     this.dataService.getTeams()
     .pipe(takeUntil(this.subscription))
     .subscribe(res => this.teams = res)
+    this.trackedTeams = this.dataService.getTrackedTeams();
   }
 
 
   deleteTeam($event: number) {
-    this.pickedTeams = this.pickedTeams.filter(el => el.id !== $event);
+    this.dataService.removeTrackTeam($event);
   }
 
   onSubmit(form: NgForm) {
     const team: Team = form.value.team;
-    const alreadyIn = this.pickedTeams.find(el => el.id === team.id);
-    if(!alreadyIn){
-      this.pickedTeams.push(team);
-    }
+    this.dataService.addTrackTeam(team);
+  }
+
+  ngDoCheck(): void {
+    this.dataService.changes.subscribe(response => this.trackedTeams = response);
   }
 
   ngOnDestroy(): void {

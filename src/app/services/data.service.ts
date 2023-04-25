@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Team } from '../models/team';
-import { Observable } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { UtilityService } from './utility.service';
 import { Game } from '../models/game';
@@ -15,9 +15,27 @@ export class DataService {
     "X-RapidAPI-Host": "free-nba.p.rapidapi.com",
   };
   private API_URL = "https://free-nba.p.rapidapi.com";
+  trackedTeams: Team[] = [];
+  changes = new Subject<Team[]>();
 
   constructor(private http: HttpClient,
               private utility: UtilityService) { }
+
+  getTrackedTeams(){
+    return this.trackedTeams;
+  }
+
+  addTrackTeam(team: Team): void {
+    const alreadyIn = this.trackedTeams.find(el => el.id === team.id);
+    if(!alreadyIn){
+      this.trackedTeams.push(team);
+      this.changes.next(this.trackedTeams);
+    }
+  }
+  removeTrackTeam(id :number){
+    this.trackedTeams = this.trackedTeams.filter(el => el.id !== id);
+    this.changes.next(this.trackedTeams);
+  }
   
   getTeams(): Observable<Team[]> {
     return this.http

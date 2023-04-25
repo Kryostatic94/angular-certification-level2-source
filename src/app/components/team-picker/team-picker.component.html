@@ -11,9 +11,9 @@
   
 
   
-  <ng-container *ngIf="pickedTeams.length > 0">
+  <ng-container *ngIf="trackedTeams.length > 0">
     <div class="container">
-      <app-team-detail *ngFor="let team of pickedTeams" 
+      <app-team-detail *ngFor="let team of trackedTeams" 
       [team]="team"
       (deleteTeam)="deleteTeam($event)">
       </app-team-detail>
