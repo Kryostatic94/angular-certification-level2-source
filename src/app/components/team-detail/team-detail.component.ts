@@ -2,8 +2,8 @@ import { OnDestroy } from '@angular/core';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Subject, Subscription } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
-import { Game } from 'src/app/models/game';
-import { Team } from 'src/app/models/team';
+import { Game } from 'src/app/models/game.model';
+import { Team } from 'src/app/models/team.model';
 import { DataService } from 'src/app/services/data.service';
 
 @Component({
@@ -24,7 +24,7 @@ export class TeamDetailComponent implements OnInit,OnDestroy{
 
   ngOnInit(): void {
     this.loading = true;
-    this.dataService.getLastResults(this.team.id)
+    this.dataService.getLastResults(this.team.id!)
     .pipe(takeUntil(this.subscription))
     .subscribe(
       response =>{

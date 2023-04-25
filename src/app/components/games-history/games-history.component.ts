@@ -2,8 +2,8 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Subject, combineLatest } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
-import { Game } from 'src/app/models/game';
-import { Team } from 'src/app/models/team';
+import { Game } from 'src/app/models/game.model';
+import { Team } from 'src/app/models/team.model';
 import { DataService } from 'src/app/services/data.service';
 
 @Component({

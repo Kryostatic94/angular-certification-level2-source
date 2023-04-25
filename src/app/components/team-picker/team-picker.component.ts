@@ -3,7 +3,7 @@ import { NgForm } from '@angular/forms';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 
-import { Team } from 'src/app/models/team';
+import { Team } from 'src/app/models/team.model';
 import { DataService } from 'src/app/services/data.service';
 
 @Component({

@@ -5,8 +5,8 @@
         <hr/>
         Results of the past 12 games:
         <p *ngFor="let game of games">
-          <strong>{{ game.homeTeam }}</strong> {{ game.homeScoredPoints }} - {{ game.visitorScoredPoints }}
-          <strong>{{ game.visitorTeam }}</strong>
+          <strong>{{ game.homeTeam.abbreviation }}</strong> {{ game.homeScoredPoints }} - {{ game.visitorScoredPoints }}
+          <strong>{{ game.visitorTeam.abbreviation }}</strong>
         </p>
         <button routerLink="/" id="backBtn"><< Back to all team stats</button>
     </div>    

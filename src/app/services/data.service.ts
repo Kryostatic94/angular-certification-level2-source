@@ -1,10 +1,12 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Team } from '../models/team';
+import { Team } from '../models/team.model';
 import { Observable, Subject } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { UtilityService } from './utility.service';
-import { Game } from '../models/game';
+import { Game } from '../models/game.model';
+import { TeamResponse } from '../models/team-response.model';
+import { GameResponse } from '../models/game-response.model';
 
 @Injectable({
   providedIn: 'root'
@@ -39,13 +41,12 @@ export class DataService {
   
   getTeams(): Observable<Team[]> {
     return this.http
-      .get<Team[]>(`${this.API_URL}/teams?page=0`, { headers: this.HEADERS })
+      .get<{data : TeamResponse[]}>(`${this.API_URL}/teams?page=0`, { headers: this.HEADERS })
       .pipe(
-        map((response : any) => {
-          const teams : Team[] = [];
-          response.data.forEach((element : any) => {
-            let result = this.utility.mapTeam(element);
-            teams.push(result);
+        map((response) => {
+          const teams: Team[] = [];
+          response.data.forEach(team => {
+            teams.push(this.utility.mapTeam(team));
           });
           return teams;
         })
@@ -54,32 +55,30 @@ export class DataService {
 
   getLastResults(id: number): Observable<Game[]> {
     return this.http
-      .get<Game[]>(`${this.API_URL}/games?page=0${this.utility.getDays()}`, {
+      .get<{data: GameResponse[]}>(`${this.API_URL}/games?page=0${this.utility.getDays()}`, {
         headers: this.HEADERS,
         params: { 
           per_page: 12, 
           "team_ids[]": "" + id },
       })
       .pipe(
-        map(
-          (response : any) => {
-            const games : Game[] = [];
-            response.data.forEach((element : any) => {
-              let result = this.utility.setGameResult(element,id);
-              games.push(result);
-            });
-            return games;
-          })
+        map((response) => {
+          const games: Game[] = [];
+          response.data.forEach(game => {
+            games.push(this.utility.setGameResult(game,id))
+          });
+          return games;
+        })
       );
   }
 
   getTeam(id: number): Observable<Team>{
     return this.http
-      .get<Team>(`${this.API_URL}/teams/${id}`, { 
+      .get<TeamResponse>(`${this.API_URL}/teams/${id}`, { 
         headers: this.HEADERS
       })
       .pipe(
-        map((response : any) => {
+        map((response) => {
           return this.utility.mapTeam(response);
         })
       );
