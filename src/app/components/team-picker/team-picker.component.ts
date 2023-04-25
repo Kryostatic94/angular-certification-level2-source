@@ -28,11 +28,11 @@ export class TeamPickerComponent implements OnInit,OnDestroy,DoCheck{
   }
 
 
-  deleteTeam($event: number) {
+  deleteTeam($event: number):void {
     this.dataService.removeTrackTeam($event);
   }
 
-  onSubmit(form: NgForm) {
+  onSubmit(form: NgForm):void {
     const team: Team = form.value.team;
     this.dataService.addTrackTeam(team);
   }

@@ -39,11 +39,11 @@ export class TeamDetailComponent implements OnInit,OnDestroy{
       });
   }
 
-  removeTeam() {
+  removeTeam(): void {
     this.deleteTeam.emit(this.team.id);
   }
 
-  ngOnDestroy(){
+  ngOnDestroy() : void{
     this.subscription.next();
     this.subscription.complete();
   }

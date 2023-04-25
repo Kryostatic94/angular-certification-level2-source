@@ -21,7 +21,7 @@ export class DataService {
   constructor(private http: HttpClient,
               private utility: UtilityService) { }
 
-  getTrackedTeams(){
+  getTrackedTeams(): Team[]{
     return this.trackedTeams;
   }
 
@@ -32,7 +32,7 @@ export class DataService {
       this.changes.next(this.trackedTeams);
     }
   }
-  removeTrackTeam(id :number){
+  removeTrackTeam(id :number): void{
     this.trackedTeams = this.trackedTeams.filter(el => el.id !== id);
     this.changes.next(this.trackedTeams);
   }

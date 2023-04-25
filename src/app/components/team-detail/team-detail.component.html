@@ -4,7 +4,7 @@
     <h6>{{ team.conference }}ern conference</h6>
     <img src="https://interstate21.com/nba-logos/{{team.abbreviation}}.png" />
     <hr>
-    Results of the past 12 gamse:
+    Results of the past 12 games:
     <div *ngIf="!loading">
         <ng-container *ngIf="games.length > 0; else noResults" >
             <ul>

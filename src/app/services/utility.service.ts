@@ -53,9 +53,9 @@ export class UtilityService {
 
    
 
-    getDays(){
+    getDays(): string{
         let index = 12;
-        const days = [];
+        const days: string[] = [];
         while(index >= 0){
             let dateToPut = this.subtractDays(index);
             days.push("&dates[]=" + dateToPut);
@@ -64,7 +64,7 @@ export class UtilityService {
         return days.join();
     }
 
-    private subtractDays(daysToSubtract : number){
+    private subtractDays(daysToSubtract : number):string{
         const date = new Date();
         date.setDate(date.getDate() - daysToSubtract);
         return date.toISOString().slice(0,10);
