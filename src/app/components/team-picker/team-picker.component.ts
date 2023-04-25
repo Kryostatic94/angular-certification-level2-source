@@ -15,6 +15,7 @@ export class TeamPickerComponent implements OnInit,OnDestroy,DoCheck{
   private subscription = new Subject<void>();
   trackedTeams: Team[] = [];
   teams: Team[] = [];
+  
   constructor(public dataService: DataService){}
   
 
@@ -37,7 +38,9 @@ export class TeamPickerComponent implements OnInit,OnDestroy,DoCheck{
   }
 
   ngDoCheck(): void {
-    this.dataService.changes.subscribe(response => this.trackedTeams = response);
+    this.dataService.changes
+    .pipe(takeUntil(this.subscription))
+    .subscribe(response => this.trackedTeams = response);
   }
 
   ngOnDestroy(): void {

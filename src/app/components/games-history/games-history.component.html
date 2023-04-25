@@ -3,6 +3,7 @@
         <h3>{{ team.fullName }} [{{ team.abbreviation }}]</h3>
         <h6>{{ team.conference }}ern conference</h6>
         <hr/>
+        Results of the past 12 gamse:
         <p *ngFor="let game of games">
           <strong>{{ game.homeTeam }}</strong> {{ game.homeScoredPoints }} - {{ game.visitorScoredPoints }}
           <strong>{{ game.visitorTeam }}</strong>
